@@ -11,7 +11,7 @@ const toursFilename = `${__dirname}/dev-data/data/tours-simple.json`;
  */
 const tours = JSON.parse(fs.readFileSync(toursFilename));
 
-app.get('/api/v1/tours/:id', (req, res) => {
+const getTour = (req, res) => {
   const id = Number.parseInt(req.params.id, 10);
   const tour = tours.find((el) => el.id === id);
 
@@ -30,9 +30,9 @@ app.get('/api/v1/tours/:id', (req, res) => {
       },
     });
   }
-});
+};
 
-app.get('/api/v1/tours', (req, res) => {
+const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
     results: tours.length,
@@ -40,11 +40,9 @@ app.get('/api/v1/tours', (req, res) => {
       tours,
     },
   });
-});
+};
 
-app.post('/api/v1/tours', (req, res) => {
-  // console.log(req.body);
-
+const createTour = (req, res) => {
   const newId = tours[tours.length - 1].id + 1;
   const newTour = { id: newId, ...req.body };
 
@@ -66,27 +64,38 @@ app.post('/api/v1/tours', (req, res) => {
         },
       });
     });
-});
+};
 
 // TODO: implement patch method
-app.patch('/api/v1/tours/:id', (req, res) => {
+const updateTour = (req, res) => {
   res.status(500).json({
     status: 'error',
     data: {
       message: 'Method not implemented yet',
     },
   });
-});
+};
 
 // TODO: implement delete method
-app.delete('/api/v1/tours/:id', (req, res) => {
+const deleteTour = (req, res) => {
   res.status(500).json({
     status: 'error',
     data: {
       message: 'Method not implemented yet',
     },
   });
-});
+};
+
+app
+  .route('/api/v1/tours')
+  .get(getAllTours)
+  .post(createTour);
+
+app
+  .route('/api/v1/tours/:id')
+  .get(getTour)
+  .patch(updateTour)
+  .delete(deleteTour);
 
 const port = 3000;
 app.listen(port, () => {
