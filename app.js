@@ -1,16 +1,13 @@
 const fs = require('fs');
 const express = require('express');
+const morgan = require('morgan');
 const { promisify } = require('util');
 
 const app = express();
+app.use(morgan('dev'));
 app.use(express.json());
 
-// Middleware to log request method and url
-app.use((req, res, next) => {
-  console.log(`${req.method} ${req.url}`);
-  next();
-});
-
+// Route Handlers
 const toursFilename = `${__dirname}/dev-data/data/tours-simple.json`;
 const tours = JSON.parse(fs.readFileSync(toursFilename));
 
@@ -89,6 +86,7 @@ const deleteTour = (req, res) => {
   });
 };
 
+// Routes
 app
   .route('/api/v1/tours')
   .get(getAllTours)
@@ -100,6 +98,7 @@ app
   .patch(updateTour)
   .delete(deleteTour);
 
+// Listener
 const port = 3000;
 app.listen(port, () => {
   console.log(`App running on http://localhost:${port}`);
