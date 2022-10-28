@@ -4,25 +4,25 @@ const { promisify } = require('util');
 const toursFilename = `${__dirname}/../dev-data/data/tours-simple.json`;
 const tours = JSON.parse(fs.readFileSync(toursFilename));
 
+// Middleware to filter if id is valid (if it exists in route)
+module.exports.checkId = (req, res, next, val) => {
+  const id = Number.parseInt(val, 10);
+
+  return tours.some((tour) => tour.id === id)
+    ? next()
+    : res.status(404).json({ status: 'fail', data: { message: 'Invalid Id' } });
+};
+
 module.exports.getTour = (req, res) => {
   const id = Number.parseInt(req.params.id, 10);
   const tour = tours.find((el) => el.id === id);
 
-  if (!tour) {
-    res.status(404).json({
-      status: 'error',
-      data: {
-        message: 'Invalid Id',
-      },
-    });
-  } else {
-    res.status(200).json({
-      status: 'success',
-      data: {
-        tour,
-      },
-    });
-  }
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour,
+    },
+  });
 };
 
 module.exports.getAllTours = (req, res) => {
