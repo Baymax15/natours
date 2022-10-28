@@ -5,14 +5,11 @@ const tourRouter = require('./routes/tourRouter');
 const userRouter = require('./routes/userRouter');
 
 const app = express();
+
 app.use(morgan('dev'));
 app.use(express.json());
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
 
-// Listener
-const port = 3000;
-app.listen(port, () => {
-  console.log(`App running on http://localhost:${port}`);
-});
+module.exports = app;
