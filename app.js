@@ -5,6 +5,12 @@ const { promisify } = require('util');
 const app = express();
 app.use(express.json());
 
+// Middleware to log request method and url
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.url}`);
+  next();
+});
+
 const toursFilename = `${__dirname}/dev-data/data/tours-simple.json`;
 const tours = JSON.parse(fs.readFileSync(toursFilename));
 
