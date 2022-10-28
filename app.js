@@ -66,23 +66,59 @@ const createTour = (req, res) => {
     });
 };
 
-// TODO: implement patch method
+// TODO: implement updateTour method
 const updateTour = (req, res) => {
   res.status(500).json({
     status: 'error',
     data: {
-      message: 'Method not implemented yet',
+      message: 'This route is not yet defined',
     },
   });
 };
 
-// TODO: implement delete method
+// TODO: implement deleteTour method
 const deleteTour = (req, res) => {
   res.status(500).json({
     status: 'error',
     data: {
-      message: 'Method not implemented yet',
+      message: 'This route is not yet defined',
     },
+  });
+};
+
+// TODO: implement getALlusers method
+const getAllusers = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined',
+  });
+};
+// TODO: implement createUser method
+const createUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined',
+  });
+};
+// TODO: implement getUser method
+const getUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined',
+  });
+};
+// TODO: implement updateUser method
+const updateUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined',
+  });
+};
+// TODO: implement deleteUser method
+const deleteUser = (req, res) => {
+  res.status(500).json({
+    status: 'error',
+    message: 'This route is not yet defined',
   });
 };
 
@@ -97,6 +133,15 @@ app
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+app.route('/api/v1/users')
+  .get(getAllusers)
+  .post(createUser);
+
+app.route('/api/v1/users/:id')
+  .get(getUser)
+  .patch(updateUser)
+  .delete(deleteUser);
 
 // Listener
 const port = 3000;
