@@ -6,9 +6,6 @@ const app = express();
 app.use(express.json());
 
 const toursFilename = `${__dirname}/dev-data/data/tours-simple.json`;
-/**
- * @type {Array}
- */
 const tours = JSON.parse(fs.readFileSync(toursFilename));
 
 const getTour = (req, res) => {
