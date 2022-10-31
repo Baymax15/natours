@@ -13,6 +13,18 @@ module.exports.checkId = (req, res, next, val) => {
     : res.status(404).json({ status: 'fail', data: { message: 'Invalid Id' } });
 };
 
+// Middleware to filter out bad post requests
+// To filter out requests which does not have required fields
+module.exports.checkPostBody = (req, res, next) => {
+  if (!req.body.name || !req.body.duration || !req.body.price) {
+    return res.status(400).json({
+      status: 'fail',
+      data: { message: 'Missing one of required fields (name, duration, price)' },
+    });
+  }
+  return next();
+};
+
 module.exports.getTour = (req, res) => {
   const id = Number.parseInt(req.params.id, 10);
   const tour = tours.find((el) => el.id === id);
